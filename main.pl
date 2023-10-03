@@ -86,13 +86,10 @@ concatenar([X|L1],L2,[X|L3]):-
 
 eliminar_primeros(L,Y,B):- length(X, B), append(X,Y,L).
 
-obtener_elemento([_|Y], 2, Y).
-obtener_elemento([_|Xs], N, Y):-
-          N2 is N - 1,
-          obtener_elemento(Xs, N2, Y).
 
-obtener_lugar([_, _, _, _| Lugar ], Lugar).
-
+obtener_lugar([X], X).
+obtener_lugar([_|Resto], Ultimo):- 
+	obtener_lugar(Resto, Ultimo).
 
 % --------------------------------- Sistema Experto (SE) ---------------------------------
 
@@ -109,6 +106,7 @@ comenzar():-
 comenzar_aux():-
 	input_to_list(OracionEncuentro),
 	validacion_gramatical(OracionEncuentro), nl,
+	writeln(OracionEncuentro), nl,
 	writeln('¿Donde desea llegar?'), 
 	input_to_list(OracionLlegar),
 	validacion_gramatical(OracionLlegar), nl,
