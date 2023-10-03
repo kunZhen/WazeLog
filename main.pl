@@ -47,7 +47,7 @@ validacion_gramatical(Oracion):-
 validacion_gramatical(Oracion):-
 	is_list(Oracion),
 	lista_vacia(Oracion, true),
-	writeln('En que lo puedo ayudar?'),nl,
+	writeln('De acuerdo, entonces su ruta... '),nl,
 	inicio_aux(),
 	!.
 validacion_gramatical(Oracion):-
@@ -86,10 +86,12 @@ concatenar([X|L1],L2,[X|L3]):-
 
 eliminar_primeros(L,Y,B):- length(X, B), append(X,Y,L).
 
-obtener_elemento([Y|_], 1, Y).
+obtener_elemento([_|Y], 2, Y).
 obtener_elemento([_|Xs], N, Y):-
           N2 is N - 1,
           obtener_elemento(Xs, N2, Y).
+
+obtener_lugar([_, _, _, _| Lugar ], Lugar).
 
 
 % --------------------------------- Sistema Experto (SE) ---------------------------------
@@ -112,7 +114,9 @@ comenzar_aux():-
 	validacion_gramatical(OracionLlegar), nl,
 	writeln('¿Algun destino intermedio?'), 
 	input_to_list(OracionIntermedio),
-	validacion_gramatical(OracionIntermedio), nl.
+	validacion_gramatical(OracionIntermedio), nl, 
+	obtener_elemento(OracionEncuentro, 5, P),  nl,
+	writeln(P).
 
 
 ?- write(' '),nl.
