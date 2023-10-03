@@ -1,8 +1,64 @@
-% Saludo -------------------------------------------------------------------------------------
+/*
+
+main.pl corresonde al archivo principal para ejecutar el sistema experto WazeLog.
+
+*/
+
+:-consult('wazeLogDB.pl').
+:-style_check(-singleton).
+
+% BNF -------------------------------------------------------------------------------------------------------------------------------------
+
+% Descripción		:	recibe una lista de palabras y una lista vacía y verifica si es una oración gramaticalmente correcta según la estructura establecida
+% Nombre de Regla	:	oracion([A],[B])
+% Parámetro			:	lista para revisar y lista vacía
+% Uso				:	se utiliza para validar oraciones
+oracion(A,B):-
+	sintagma_nominal(A,C),
+	sintagma_verbal(C,B).
+
+% Descripción		:	recibe una lista de palabras y una lista vacía; elimina el primer sintagma nominal encontrado y devuelve el resto de las palabras
+% Nombre de Regla	:	sintagma_nominal([A],[B])
+% Parámetro			:	lista a revisar y lista vacía
+% Uso				:	se utiliza para encontrar el primer sintagma nominal en una lista de palabras
+sintagma_nominal(A,B):-
+	determinante_n(A,C),
+	sustantivo_m(C,B).
+
+% Descripción		:	recibe una lista de palabras y una lista vacía; elimina el primer sintagma verbal encontrado y devuelve el resto de las palabras
+% Nombre de Regla	:	sintagma_verbal([A],[B])
+% Parámetro			:	lista a revisar y lista vacía
+% Uso				:	se utiliza para encontrar el primer sintagma verbal en una lista de palabras
+sintagma_verbal(A,B):-
+	verbo(A,B).
+sintagma_verbal(A,B):-
+	verbo(A,C),
+	sintagma_nominal(C,B).
+
+% ValidaciÓn Gramatical, Saludo, Despedida ------------------------------------------------------------------------------------------------
+
+% Descripción		:	valida si la oración digitada por el usuario está gramaticalmente correcta según el BNF establecido
+% Nombre de Regla	:	validacion_gramatical()
+% Parámetro			:	lista a revisar
+% Uso				:	Se utiliza para verificar gramaticalmente una oración, de lo contrario, devolver un mensaje al usuario
+validacion_gramatical(Oracion):-
+	oracion(Oracion,[]),
+	!.
+validacion_gramatical(Oracion):-
+	is_list(Oracion),
+	lista_vacia(Oracion, true),
+	writeln('En que lo puedo ayudar?'),nl,
+	inicio_aux(),
+	!.
+validacion_gramatical(Oracion):-
+	writeln('Oracion gramaticalmente incorrecta'),nl,
+	writeln('Escriba de nuevo su oracion'),
+	comenzar_aux(),
+	!.
 
 respuesta_saludo(Nombre):-
 	write('Hola '),
-	writeln(Nombre),
+	writeln(Nombre), 
 	writeln('Por favor indicame donde se encuentra.').
 
 % Operaciones Basicas ------------------------------------------------------------------------------------------------------------
@@ -43,10 +99,20 @@ bienvenida():-
 
 comenzar():-
     bienvenida(),
-	writeln('Indique su nombre:'),
-	input_to_string(Nombre),
-	respuesta_saludo(Nombre).
-    %comenzar_aux().
+	writeln('Indique su nombre:'), 
+	input_to_string(Nombre), nl,
+	respuesta_saludo(Nombre), 
+	comenzar_aux().
+
+comenzar_aux():-
+	input_to_list(OracionEncuentro),
+	validacion_gramatical(OracionEncuentro), nl,
+	writeln('¿Donde desea llegar?'), 
+	input_to_list(OracionLlegar),
+	validacion_gramatical(OracionLlegar), nl,
+	writeln('¿Algun destino intermedio?'), 
+	input_to_list(OracionIntermedio),
+	validacion_gramatical(OracionIntermedio), nl.
 
 
 ?- write(' '),nl.
