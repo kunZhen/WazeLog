@@ -7,6 +7,7 @@ wazeLogDB.pl corresponde a la base de conocimiento de la aplicación WazeLog, la
 :-style_check(-singleton).
 
 determinante_n([yo|S], S).
+determinante_n([tambien|S], S).
 determinante_n([en|S], S).
 determinante_n([a|S], S).
 determinante_n([por|S], S).

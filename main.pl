@@ -58,8 +58,7 @@ validacion_gramatical(Oracion):-
 
 respuesta_saludo(Nombre):-
 	write('Hola '),
-	writeln(Nombre), 
-	writeln('Por favor indicame donde se encuentra.').
+	writeln(Nombre).
 
 % Operaciones Basicas ------------------------------------------------------------------------------------------------------------
 
@@ -86,10 +85,12 @@ concatenar([X|L1],L2,[X|L3]):-
 
 eliminar_primeros(L,Y,B):- length(X, B), append(X,Y,L).
 
-
+% Se encarga de obtener el punto de inicio, destino o intermedio
 obtener_lugar([X], X).
 obtener_lugar([_|Resto], Ultimo):- 
 	obtener_lugar(Resto, Ultimo).
+
+
 
 % --------------------------------- Sistema Experto (SE) ---------------------------------
 
@@ -104,18 +105,32 @@ comenzar():-
 	comenzar_aux().
 
 comenzar_aux():-
+	encuentro(OracionEncuentro),
+	obtener_lugar(OracionEncuentro, Encuentro),
+	writeln(Encuentro), nl,
+
+	llegada(OracionLlegar),
+	obtener_lugar(OracionLlegar, Llegar),
+	writeln(Llegar), nl,
+
+	intermedio(), 
+	writeln('Se llegoooooo').
+
+encuentro(OracionEncuentro):-
+	writeln('Por favor indicame donde se encuentra.'),
 	input_to_list(OracionEncuentro),
-	validacion_gramatical(OracionEncuentro), nl,
-	writeln(OracionEncuentro), nl,
+	validacion_gramatical(OracionEncuentro).
+
+llegada(OracionLlegar):-
 	writeln('¿Donde desea llegar?'), 
 	input_to_list(OracionLlegar),
-	validacion_gramatical(OracionLlegar), nl,
+	validacion_gramatical(OracionLlegar).
+
+intermedio():-
 	writeln('¿Algun destino intermedio?'), 
 	input_to_list(OracionIntermedio),
-	validacion_gramatical(OracionIntermedio), nl, 
-	obtener_elemento(OracionEncuentro, 5, P),  nl,
-	writeln(P).
-
+	lista_vacia(OracionIntermedio, Empty),
+	validacion_gramatical(OracionIntermedio).
 
 ?- write(' '),nl.
 ?- write('------------------------------- WazeLog -------------------------------'),nl.
