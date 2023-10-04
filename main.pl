@@ -51,14 +51,21 @@ validacion_gramatical(Oracion):-
 	inicio_aux(),
 	!.
 validacion_gramatical(Oracion):-
-	writeln('Oracion gramaticalmente incorrecta'),nl,
-	writeln('Escriba de nuevo su oracion'),
-	comenzar_aux(),
-	!.
+	nl, 
+	writeln('Oracion gramaticalmente incorrecta'),
+	nl,
+	writeln('----------------------------------------------------------------------------'),
+	writeln('----------------------------------------------------------------------------'),
+	writeln('----- Gracias por utilizar WazeLog. Ejecuta comenzar(). para reiniciar -----'),
+	writeln('----------------------------------------------------------------------------'),
+	writeln('----------------------------------------------------------------------------'), fail.
 
 respuesta_saludo(Nombre):-
 	write('Hola '),
-	writeln(Nombre).
+	write(Nombre).
+
+despedida():-
+	writeln('Gracias por utilizar WazeLog, esperamos que haya sido de su agrado.').
 
 % Operaciones Basicas ------------------------------------------------------------------------------------------------------------
 
@@ -107,17 +114,17 @@ comenzar():-
 comenzar_aux():-
 	encuentro(OracionEncuentro),
 	obtener_lugar(OracionEncuentro, Encuentro),
-	writeln(Encuentro), nl,
+	writeln(Encuentro), !, nl,
 
 	llegada(OracionLlegar),
 	obtener_lugar(OracionLlegar, Llegar),
 	writeln(Llegar), nl,
 
-	intermedio(), 
+	intermedio(OracionIntermedio), 
 	writeln('Se llegoooooo').
 
 encuentro(OracionEncuentro):-
-	writeln('Por favor indicame donde se encuentra.'),
+	writeln('. Por favor indicame donde se encuentra.'),
 	input_to_list(OracionEncuentro),
 	validacion_gramatical(OracionEncuentro).
 
@@ -126,11 +133,11 @@ llegada(OracionLlegar):-
 	input_to_list(OracionLlegar),
 	validacion_gramatical(OracionLlegar).
 
-intermedio():-
+intermedio(OracionIntermedio):-
 	writeln('¿Algun destino intermedio?'), 
 	input_to_list(OracionIntermedio),
-	lista_vacia(OracionIntermedio, Empty),
 	validacion_gramatical(OracionIntermedio).
+
 
 ?- write(' '),nl.
 ?- write('------------------------------- WazeLog -------------------------------'),nl.

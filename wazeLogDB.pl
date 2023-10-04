@@ -24,9 +24,9 @@ sustantivo_m([pacayas|S], S).
 sustantivo_m([paraiso|S], S).
 sustantivo_m([cervantes|S], S).
 sustantivo_m([orosi|S], S).
-sustantivo_m([cachi|R], R).
-sustantivo_m([juanVinas|R], R).
-sustantivo_m([turrialba|R], R).
+sustantivo_m([cachi|S], S).
+sustantivo_m([juanVinas|S], S).
+sustantivo_m([turrialba|S], S).
 
 verbo([encuentro|S], S).
 verbo([llegar|S], S).
