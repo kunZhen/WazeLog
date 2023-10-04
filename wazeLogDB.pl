@@ -14,6 +14,7 @@ determinante_n([por|S], S).
 
 sustantivo_m([me|S], S).
 sustantivo_m([quiero|S], S).
+sustantivo_m([estoy|S], S).
 
 sustantivo_m([sanJose|S], S).
 sustantivo_m([coralillo|S], S).
@@ -29,5 +30,7 @@ sustantivo_m([juanVinas|S], S).
 sustantivo_m([turrialba|S], S).
 
 verbo([encuentro|S], S).
+verbo([ubico|S], S).
 verbo([llegar|S], S).
 verbo([pasar|S], S).
+
