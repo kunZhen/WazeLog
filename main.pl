@@ -126,17 +126,14 @@ comenzar:-
 comenzar_aux(Nombre):-
 	encuentro(OracionEncuentro),
 	obtener_lugar(OracionEncuentro, Encuentro),
-	validar_lugar(Encuentro),
-	writeln(Encuentro), !, nl,
+	validar_lugar(Encuentro), nl,
 
 	llegada(OracionLlegar),
 	obtener_lugar(OracionLlegar, Llegar),
-	validar_lugar(Llegar),
-	writeln(Llegar), nl,
+	validar_lugar(Llegar), nl,
 
 	intermedio(OracionIntermedio), 
-	obtener_lugar(OracionIntermedio, Intermedio),
-	writeln(Intermedio), nl,
+	obtener_lugar(OracionIntermedio, Intermedio), nl,
 	rutaEntreTres(Encuentro, Intermedio, Llegar, RutaCorta), 
 	ruta_a_tomar(Nombre, RutaCorta), despedida().
 
