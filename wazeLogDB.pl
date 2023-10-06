@@ -34,3 +34,40 @@ verbo([ubico|S], S).
 verbo([llegar|S], S).
 verbo([pasar|S], S).
 
+% Conexiones de 1 vía
+conexion(tresRios, sanJose, 8).
+conexion(cartago, tresRios, 8).
+conexion(cartago, paraiso, 10).
+conexion(paraiso, cervantes, 4).
+conexion(cervantes, juanVinas, 5).
+conexion(juanVinas, turrialba, 4).
+conexion(turrialba, pacayas, 18).
+
+% Conexiones de 2 vías
+conexion(sanJose, corralillo, 22).
+conexion(corralillo, sanJose, 22).
+conexion(sanJose, cartago, 20).
+conexion(cartago, sanJose, 20).
+conexion(corralillo, musgoVerde, 6).
+conexion(musgoVerde, corralillo, 6). 
+conexion(musgoVerde, cartago, 10).
+conexion(cartago, musgoVerde, 10).
+
+conexion(pacayas, cartago, 13).
+conexion(cartago, pacayas, 13).
+conexion(pacayas, tresRios, 15).
+conexion(tresRios, pacayas, 15).
+conexion(pacayas, cervantes,  8).
+conexion(cervantes, pacayas, 8).
+
+conexion(cachi, cervantes, 7).
+conexion(cervantes, cachi, 7).
+conexion(cachi, paraiso, 10).
+conexion(paraiso, cachi, 10).
+conexion(cachi, orosi, 12).
+conexion(orosi, cachi, 12).
+conexion(cachi, turrialba, 40).
+conexion(turrialba, cachi, 40).
+
+conexion(paraiso, orosi, 8).
+conexion(orosi, paraiso, 8).

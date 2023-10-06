@@ -58,7 +58,7 @@ validacion_gramatical(Oracion):-
 	writeln('----------------------------------------------------------------------------'),
 	writeln('----- Gracias por utilizar WazeLog. Ejecuta comenzar(). para reiniciar -----'),
 	writeln('----------------------------------------------------------------------------'),
-	writeln('----------------------------------------------------------------------------'), fail.
+	writeln('----------------------------------------------------------------------------'), comenzar.
 
 respuesta_saludo(Nombre):-
 	write('Hola '),
@@ -104,14 +104,14 @@ obtener_lugar([_|Resto], Ultimo):-
 bienvenida():-
     write('Bienvenido a WazeLog, la mejor logica para llegar a su destino.'),nl,nl.
 
-comenzar():-
+comenzar:-
     bienvenida(),
 	writeln('Indique su nombre:'), 
 	input_to_string(Nombre), nl,
 	respuesta_saludo(Nombre), 
-	comenzar_aux().
+	comenzar_aux.
 
-comenzar_aux():-
+comenzar_aux:-
 	encuentro(OracionEncuentro),
 	obtener_lugar(OracionEncuentro, Encuentro),
 	writeln(Encuentro), !, nl,
