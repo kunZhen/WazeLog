@@ -69,8 +69,18 @@ despedida():-
 	writeln('----------------------------------------------------------------------------'),
 	writeln('----------------------------------------------------------------------------'), fail.
 
-ruta_a_tomar(RutaCorta):-
-	writeln('La ruta a tomar es: '), write(RutaCorta).
+ruta_a_tomar(Nombre, [Ruta|Distancia]):-
+	write('De acuerdo '), write(Nombre),
+	write('. La ruta a tomar es: '), separar_ruta(Ruta), nl,
+	tiempo_estimado(Distancia, TiempoEstimado), tiempo_en_presa(Distancia, TiempoEnPresa),
+	write('Tiempo estimado: '), write(TiempoEstimado), write(' minutos'), nl,
+	write('Tiempo si hay presa: '), write(TiempoEnPresa), write(' minutos').
+
+
+separar_ruta([]):- write('FIN :D').
+separar_ruta([Lugar|Resto]):- 
+	write(Lugar), write(' -> '), separar_ruta(Resto).
+
 
 % Operaciones Basicas ------------------------------------------------------------------------------------------------------------
 
@@ -102,8 +112,11 @@ obtener_lugar([X], X).
 obtener_lugar([_|Resto], Ultimo):- 
 	obtener_lugar(Resto, Ultimo).
 
+tiempo_estimado(Distancia, Tiempo):-
+	Tiempo is Distancia * 2.
 
-
+tiempo_en_presa(Distancia, Tiempo):-
+	Tiempo is Distancia * 3.
 
 % --------------------------------- Sistema Experto (SE) ---------------------------------
 
@@ -115,9 +128,9 @@ comenzar:-
 	writeln('Indique su nombre:'), 
 	input_to_string(Nombre), nl,
 	respuesta_saludo(Nombre), 
-	comenzar_aux.
+	comenzar_aux(Nombre).
 
-comenzar_aux:-
+comenzar_aux(Nombre):-
 	encuentro(OracionEncuentro),
 	obtener_lugar(OracionEncuentro, Encuentro),
 	writeln(Encuentro), !, nl,
@@ -130,7 +143,7 @@ comenzar_aux:-
 	obtener_lugar(OracionIntermedio, Intermedio),
 	writeln(Intermedio), nl,
 	rutaEntreTres(Encuentro, Intermedio, Llegar, RutaCorta), 
-	ruta_a_tomar(RutaCorta), despedida().
+	ruta_a_tomar(Nombre, RutaCorta), despedida().
 
 encuentro(OracionEncuentro):-
 	writeln('. Por favor indicame donde se encuentra.'),
