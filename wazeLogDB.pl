@@ -71,9 +71,6 @@ determinante_n([a|S], S).
 determinante_n([por|S], S).
 determinante_n([actualmente|S], S).
 
-sustantivo_m([me|S], S).
-sustantivo_m([quiero|S], S).
-
 sustantivo_m([sanJose|S], S).
 sustantivo_m([coralillo|S], S).
 sustantivo_m([tresRios|S], S).
@@ -86,6 +83,8 @@ sustantivo_m([orosi|S], S).
 sustantivo_m([cachi|S], S).
 sustantivo_m([juanVinas|S], S).
 sustantivo_m([turrialba|S], S).
+sustantivo_m([me|S], S).
+sustantivo_m([quiero|S], S).
 
 verbo([encuentro|S], S).
 verbo([deseo|S], S).
