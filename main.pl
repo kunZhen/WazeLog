@@ -5,6 +5,7 @@ main.pl corresonde al archivo principal para ejecutar el sistema experto WazeLog
 */
 
 :-consult('wazeLogDB.pl').
+:-consult('bfs.pl').
 :-style_check(-singleton).
 
 % BNF -------------------------------------------------------------------------------------------------------------------------------------
@@ -52,20 +53,24 @@ validacion_gramatical(Oracion):-
 	!.
 validacion_gramatical(Oracion):-
 	nl, 
-	writeln('Oracion gramaticalmente incorrecta'),
-	nl,
-	writeln('----------------------------------------------------------------------------'),
-	writeln('----------------------------------------------------------------------------'),
-	writeln('----- Gracias por utilizar WazeLog. Ejecuta comenzar(). para reiniciar -----'),
-	writeln('----------------------------------------------------------------------------'),
-	writeln('----------------------------------------------------------------------------'), comenzar.
+	writeln('Oracion gramaticalmente incorrecta'), 
+	despedida().
+	
 
 respuesta_saludo(Nombre):-
 	write('Hola '),
 	write(Nombre).
 
 despedida():-
-	writeln('Gracias por utilizar WazeLog, esperamos que haya sido de su agrado.').
+	nl, 
+	writeln('----------------------------------------------------------------------------'),
+	writeln('----------------------------------------------------------------------------'),
+	writeln('----- Gracias por utilizar WazeLog. Ejecuta comenzar(). para reiniciar -----'),
+	writeln('----------------------------------------------------------------------------'),
+	writeln('----------------------------------------------------------------------------'), fail.
+
+ruta_a_tomar(RutaCorta):-
+	writeln('La ruta a tomar es: '), write(RutaCorta).
 
 % Operaciones Basicas ------------------------------------------------------------------------------------------------------------
 
@@ -99,6 +104,7 @@ obtener_lugar([_|Resto], Ultimo):-
 
 
 
+
 % --------------------------------- Sistema Experto (SE) ---------------------------------
 
 bienvenida():-
@@ -121,7 +127,10 @@ comenzar_aux:-
 	writeln(Llegar), nl,
 
 	intermedio(OracionIntermedio), 
-	writeln('Se llegoooooo').
+	obtener_lugar(OracionIntermedio, Intermedio),
+	writeln(Intermedio), nl,
+	rutaEntreTres(Encuentro, Intermedio, Llegar, RutaCorta), 
+	ruta_a_tomar(RutaCorta), despedida().
 
 encuentro(OracionEncuentro):-
 	writeln('. Por favor indicame donde se encuentra.'),
