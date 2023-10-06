@@ -1,11 +1,16 @@
 /*
 
-wazeLogDB.pl corresponde a la base de conocimiento de la aplicación WazeLog, la cual contiene las reglas gramaticales para validar las oraciones digitadas por el usuario.
+wazeLogDB.pl corresponde a la base de conocimiento de la aplicación WazeLog, la cual contiene las 
+reglas gramaticales para validar las oraciones digitadas por el usuario. Así como las conexiones que
+se presentan entre los lugares con su respectivo peso en kilometros.
 
 */
 
 :-style_check(-singleton).
 
+% Grafo --------------------------------------------------------------------------------------------------
+
+% Lugares disponibles
 lugar(sanJose).
 lugar(corralillo).
 lugar(tresRios).
@@ -56,6 +61,8 @@ conexion(turrialba, cachi, 40).
 
 conexion(paraiso, orosi, 8).
 conexion(orosi, paraiso, 8).
+
+% Para análisis de oraciones --------------------------------------------------------------------------------------------------
 
 determinante_n([yo|S], S).
 determinante_n([tambien|S], S).
