@@ -6,14 +6,14 @@ parcialBFS(Inicio, Fin, Ruta, Distancia) :-
 % Caso base
 parcialBFS(Nodo, Nodo, Ruta, Distancia, Ruta, Distancia).
 
-% Caso recursivo
+% Caso recursivo para el calculo de la ruta mas corta 
 parcialBFS(Inicio, End, Ruta, Distancia, Ruta_final, Distancia_Final) :-
     conexion(Inicio, Nodo_siguiente, Distancia_hasta_siguiente),
     \+ member(Nodo_siguiente, Ruta), % Evitar ciclos
     Nueva_distancia is Distancia + Distancia_hasta_siguiente,
     parcialBFS(Nodo_siguiente, End, [Nodo_siguiente | Ruta], Nueva_distancia, Ruta_final, Distancia_Final).
 
-% Predicado para encontrar
+% Predicado para encontrar la ruta corta entre el punto de partida y final
 bfs(Inicio, Fin, RutaCorta) :-
     findall([Ruta, Distancia], parcialBFS(Inicio, Fin, Ruta, Distancia), TodasRutas), minimo(TodasRutas, RutaCorta).
 
@@ -32,17 +32,14 @@ minimo([PrimerElemento|Resto], Minimo) :-
     obtener_distancia(MinimoResto, DistanciaRuta2),
     (DistanciaRuta1 < DistanciaRuta2 -> Minimo = PrimerElemento ; Minimo = MinimoResto).
 
-% Example:
-% Find all routes between two different nodes, like "sanJose" and "turrialba"
-% Call bfs(sanJose, turrialba, Rutas).
-
 eliminarUltimoElemento([_], []).
 eliminarUltimoElemento([X|Xs], [X|Resto]) :- eliminarUltimoElemento(Xs, Resto). 
 
-% Predicate to calculte the route between two nodes
+% Predicado para calcular la ruta entre dos nodos, se emplea en la rutaEntreTres para calcular el punto de inicio a la parada y luego de la parada al destino 
 rutaEntre(Inicio, Final, Ruta, Distancia) :-
     parcialBFS(Inicio, Final, Ruta, Distancia).
 
+% Se encarga de devolver la ruta mas corta del punto de inicio, parada y final
 rutaEntreTres(Inicio, Intermedio, Final, Ruta, Distancia) :-
     rutaEntre(Inicio, Intermedio, Ruta1, Distancia1),
     rutaEntre(Intermedio, Final, Ruta2, Distancia2),
@@ -50,15 +47,12 @@ rutaEntreTres(Inicio, Intermedio, Final, Ruta, Distancia) :-
     append(Ruta1_ultimoEliminar, Ruta2, Ruta), % Combina rutas
     Distancia is Distancia1 + Distancia2. 
 
+% Encuentra todas las rutas entre tres nodos y las junta en una lista
 rutaEntreTres(Inicio, Intermedio, Final, RutaCorta) :-
     findall([Ruta, Distancia], rutaEntreTres(Inicio, Intermedio, Final, Ruta, Distancia), TodasRutas), minimo(TodasRutas, RutaCorta).
 
-% Example of use:
-% Calcule the route between "sanJose", "cartago" y "turrialba"
-% Call rutaEntreTres(sanJose, cartago, turrialba, RutaCorta).
-
 %Predicado para calcular la ruta entre 3 nodos: inicio, intermedio, y final.
-todasRutasEntre(Inicio,Intermedio,Final,Rutas,Distancia):-
+todasRutasEntre(Inicio, Intermedio, Final, Rutas, Distancia):-
     findall((Ruta,Distancia),rutaEntreTres(Inicio,Intermedio,Final,Ruta,Distancia),Rutas).
 
 encuentra_ruta_menor_distancia_en_rutas(Rutas, RutaMenorDistancia, DistanciaMenor) :-
