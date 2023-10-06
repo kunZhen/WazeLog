@@ -81,6 +81,7 @@ sustantivo_m([juanVinas|S], S).
 sustantivo_m([turrialba|S], S).
 
 verbo([encuentro|S], S).
+verbo([deseo|S], S).
 verbo([ubico|S], S).
 verbo([hallo|S], S).
 verbo([estoy|S], S).
@@ -91,4 +92,4 @@ verbo([pasar|S], S).
 verbo([circular|S], S).
 verbo([transitar|S], S).
 
-
+negacion(['no'|_]).

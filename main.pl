@@ -33,9 +33,16 @@ sintagma_verbal(A,B):-
 validacion_gramatical(Oracion):-
 	oracion(Oracion,[]),
 	!.
-validacion_gramatical(Oracion):-
-	respuesta_si_no(Oracion, Valor),
+
+:- discontiguous validacion_gramatical/1.
+validacion_gramatical(Nombre, Oracion, Encuentro, Llegar):-
+	negacion(Oracion), 
+	bfs(Encuentro, Llegar, RutaCorta), 
+	ruta_a_tomar(Nombre, RutaCorta),
 	!.
+
+validacion_gramatical(Nombre, Oracion, Encuentro, Llegar):- validacion_gramatical(Oracion), !. 
+
 validacion_gramatical(Oracion):-
 	nl, 
 	writeln('Oracion gramaticalmente incorrecta'), 
@@ -59,13 +66,14 @@ despedida():-
 	writeln('----------------------------------------------------------------------------'),
 	writeln('----------------------------------------------------------------------------'), fail.
 
+
 % 
 ruta_a_tomar(Nombre, [Ruta|Distancia]):-
 	write('De acuerdo '), write(Nombre),
 	write('. La ruta a tomar es: '), separar_ruta(Ruta), nl,
 	tiempo_estimado(Distancia, TiempoEstimado), tiempo_en_presa(Distancia, TiempoEnPresa),
 	write('Tiempo estimado: '), write(TiempoEstimado), write(' minutos'), nl,
-	write('Tiempo si hay presa: '), write(TiempoEnPresa), write(' minutos').
+	write('Tiempo si hay presa: '), write(TiempoEnPresa), write(' minutos'), despedida().
 
 separar_ruta([]):- write('FIN :D').
 separar_ruta([Lugar|Resto]):- 
@@ -74,16 +82,6 @@ separar_ruta([Lugar|Resto]):-
 
 % Operaciones Basicas ------------------------------------------------------------------------------------------------------------
 
-lista_vacia(List, Empty) :-
-    length(List, Len),
-    (   Len =< 1
-    ->  Empty = true
-    ;   Empty = false
-    ).
-
-respuesta_si_no([Respuesta|Resto], Valor):-
-	Respuesta = no -> Valor = true; Valor = false.
-
 input_to_list(L):-
 	read_line_to_codes(user_input,Cs),
 	atom_codes(A,Cs),
@@ -91,14 +89,7 @@ input_to_list(L):-
 input_to_string(A):-
 	read_line_to_codes(user_input,Cs),
 	atom_codes(A,Cs).
-list_to_string(List, String):-
-	atomic_list_concat(List, ' ', String).
 
-concatenar([],L,L).
-concatenar([X|L1],L2,[X|L3]):-
-	concatenar(L1,L2,L3).
-
-eliminar_primeros(L,Y,B):- length(X, B), append(X,Y,L).
 
 % Se encarga de obtener el punto de inicio, destino o intermedio
 obtener_lugar([X], X).
@@ -133,9 +124,10 @@ comenzar_aux(Nombre):-
 	validar_lugar(Llegar), nl,
 
 	intermedio(OracionIntermedio), 
+	validacion_gramatical(Nombre, OracionIntermedio, Encuentro, Llegar), nl,
 	obtener_lugar(OracionIntermedio, Intermedio), nl,
 	rutaEntreTres(Encuentro, Intermedio, Llegar, RutaCorta), 
-	ruta_a_tomar(Nombre, RutaCorta), despedida().
+	ruta_a_tomar(Nombre, RutaCorta).
 
 encuentro(OracionEncuentro):-
 	writeln('. Por favor indicame donde se encuentra.'),
@@ -149,8 +141,7 @@ llegada(OracionLlegar):-
 
 intermedio(OracionIntermedio):-
 	writeln('¿Algun destino intermedio?'), 
-	input_to_list(OracionIntermedio),
-	validacion_gramatical(OracionIntermedio).
+	input_to_list(OracionIntermedio).
 
 
 ?- write(' '),nl.
