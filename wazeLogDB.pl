@@ -34,6 +34,19 @@ verbo([ubico|S], S).
 verbo([llegar|S], S).
 verbo([pasar|S], S).
 
+lugar(sanJose).
+lugar(corralillo).
+lugar(tresRios).
+lugar(musgoVerde).
+lugar(cartago).
+lugar(pacayas).
+lugar(paraiso).
+lugar(cervantes).
+lugar(orosi).
+lugar(cachi).
+lugar(juanVinas).
+lugar(turrialba).
+
 % Conexiones de 1 vía
 conexion(tresRios, sanJose, 8).
 conexion(cartago, tresRios, 8).
@@ -71,3 +84,5 @@ conexion(turrialba, cachi, 40).
 
 conexion(paraiso, orosi, 8).
 conexion(orosi, paraiso, 8).
+
+

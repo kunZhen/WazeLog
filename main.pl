@@ -46,23 +46,22 @@ validacion_gramatical(Oracion):-
 	oracion(Oracion,[]),
 	!.
 validacion_gramatical(Oracion):-
-	is_list(Oracion),
-	lista_vacia(Oracion, true),
-	writeln('De acuerdo, entonces su ruta... '),nl,
-	inicio_aux(),
+	respuesta_si_no(Oracion, Valor),
 	!.
 validacion_gramatical(Oracion):-
 	nl, 
 	writeln('Oracion gramaticalmente incorrecta'), 
 	despedida().
-	
+
+validar_lugar(Lugar):- lugar(Lugar), !.
+validar_lugar(Lugar):- nl, writeln('El lugar que se indica no se encuentra en nuestra base de conocimiento. Por favor, revisar el Manual de Usuario.'), despedida().
 
 respuesta_saludo(Nombre):-
 	write('Hola '),
 	write(Nombre).
 
 despedida():-
-	nl, 
+	nl, nl,
 	writeln('----------------------------------------------------------------------------'),
 	writeln('----------------------------------------------------------------------------'),
 	writeln('----- Gracias por utilizar WazeLog. Ejecuta comenzar(). para reiniciar -----'),
@@ -90,6 +89,9 @@ lista_vacia(List, Empty) :-
     ->  Empty = true
     ;   Empty = false
     ).
+
+respuesta_si_no([Respuesta|Resto], Valor):-
+	Respuesta = no -> Valor = true; Valor = false.
 
 input_to_list(L):-
 	read_line_to_codes(user_input,Cs),
@@ -133,10 +135,12 @@ comenzar:-
 comenzar_aux(Nombre):-
 	encuentro(OracionEncuentro),
 	obtener_lugar(OracionEncuentro, Encuentro),
+	validar_lugar(Encuentro),
 	writeln(Encuentro), !, nl,
 
 	llegada(OracionLlegar),
 	obtener_lugar(OracionLlegar, Llegar),
+	validar_lugar(Llegar),
 	writeln(Llegar), nl,
 
 	intermedio(OracionIntermedio), 
