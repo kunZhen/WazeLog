@@ -10,38 +10,26 @@ main.pl corresonde al archivo principal para ejecutar el sistema experto WazeLog
 
 % BNF -------------------------------------------------------------------------------------------------------------------------------------
 
-% Descripción		:	recibe una lista de palabras y una lista vacía y verifica si es una oración gramaticalmente correcta según la estructura establecida
-% Nombre de Regla	:	oracion([A],[B])
-% Parámetro			:	lista para revisar y lista vacía
-% Uso				:	se utiliza para validar oraciones
+% Recibe una lista de palabras y una lista vacía y verifica si es una oración gramaticalmente correcta según la estructura establecida; se utiliza para validar oraciones
 oracion(A,B):-
 	sintagma_nominal(A,C),
 	sintagma_verbal(C,B).
 
-% Descripción		:	recibe una lista de palabras y una lista vacía; elimina el primer sintagma nominal encontrado y devuelve el resto de las palabras
-% Nombre de Regla	:	sintagma_nominal([A],[B])
-% Parámetro			:	lista a revisar y lista vacía
-% Uso				:	se utiliza para encontrar el primer sintagma nominal en una lista de palabras
+% Recibe una lista de palabras y una lista vacía; elimina el primer sintagma nominal encontrado y devuelve el resto de las palabras; se utiliza para encontrar el primer sintagma nominal en una lista de palabras
 sintagma_nominal(A,B):-
 	determinante_n(A,C),
 	sustantivo_m(C,B).
 
-% Descripción		:	recibe una lista de palabras y una lista vacía; elimina el primer sintagma verbal encontrado y devuelve el resto de las palabras
-% Nombre de Regla	:	sintagma_verbal([A],[B])
-% Parámetro			:	lista a revisar y lista vacía
-% Uso				:	se utiliza para encontrar el primer sintagma verbal en una lista de palabras
+% Recibe una lista de palabras y una lista vacía; elimina el primer sintagma verbal encontrado y devuelve el resto de las palabras; se utiliza para encontrar el primer sintagma verbal en una lista de palabras
 sintagma_verbal(A,B):-
 	verbo(A,B).
 sintagma_verbal(A,B):-
 	verbo(A,C),
 	sintagma_nominal(C,B).
 
-% ValidaciÓn Gramatical, Saludo, Despedida ------------------------------------------------------------------------------------------------
+% ValidaciÓn, Saludo, Despedida, Indicaciones de Ruta ------------------------------------------------------------------------------------------------
 
-% Descripción		:	valida si la oración digitada por el usuario está gramaticalmente correcta según el BNF establecido
-% Nombre de Regla	:	validacion_gramatical()
-% Parámetro			:	lista a revisar
-% Uso				:	Se utiliza para verificar gramaticalmente una oración, de lo contrario, devolver un mensaje al usuario
+% Valida si la oración digitada por el usuario está gramaticalmente correcta según el BNF establecido; se utiliza para verificar gramaticalmente una oración, de lo contrario, devolver un mensaje al usuario
 validacion_gramatical(Oracion):-
 	oracion(Oracion,[]),
 	!.
@@ -53,13 +41,16 @@ validacion_gramatical(Oracion):-
 	writeln('Oracion gramaticalmente incorrecta'), 
 	despedida().
 
+% Valida si el lugar digitado por el usuario se encuentra en la base de conocimiento; se utiliza para verificar si el lugar digitado por el usuario se encuentra en la base de conocimiento, de lo contrario, devolvera un mensaje al usuario
 validar_lugar(Lugar):- lugar(Lugar), !.
 validar_lugar(Lugar):- nl, writeln('El lugar que se indica no se encuentra en nuestra base de conocimiento. Por favor, revisar el Manual de Usuario.'), despedida().
 
+% Saluda al usuario
 respuesta_saludo(Nombre):-
 	write('Hola '),
 	write(Nombre).
 
+% Se despide del usuario
 despedida():-
 	nl, nl,
 	writeln('----------------------------------------------------------------------------'),
@@ -68,13 +59,13 @@ despedida():-
 	writeln('----------------------------------------------------------------------------'),
 	writeln('----------------------------------------------------------------------------'), fail.
 
+% 
 ruta_a_tomar(Nombre, [Ruta|Distancia]):-
 	write('De acuerdo '), write(Nombre),
 	write('. La ruta a tomar es: '), separar_ruta(Ruta), nl,
 	tiempo_estimado(Distancia, TiempoEstimado), tiempo_en_presa(Distancia, TiempoEnPresa),
 	write('Tiempo estimado: '), write(TiempoEstimado), write(' minutos'), nl,
 	write('Tiempo si hay presa: '), write(TiempoEnPresa), write(' minutos').
-
 
 separar_ruta([]):- write('FIN :D').
 separar_ruta([Lugar|Resto]):- 

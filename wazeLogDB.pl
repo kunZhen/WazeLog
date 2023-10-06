@@ -11,6 +11,7 @@ determinante_n([tambien|S], S).
 determinante_n([en|S], S).
 determinante_n([a|S], S).
 determinante_n([por|S], S).
+determinante_n([actualmente|S], S).
 
 sustantivo_m([me|S], S).
 sustantivo_m([quiero|S], S).
@@ -33,6 +34,7 @@ verbo([encuentro|S], S).
 verbo([ubico|S], S).
 verbo([llegar|S], S).
 verbo([pasar|S], S).
+verbo([estoy|S], S).
 
 lugar(sanJose).
 lugar(corralillo).
