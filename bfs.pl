@@ -50,14 +50,3 @@ rutaEntreTres(Inicio, Intermedio, Final, Ruta, Distancia) :-
 % Encuentra todas las rutas entre tres nodos y las junta en una lista
 rutaEntreTres(Inicio, Intermedio, Final, RutaCorta) :-
     findall([Ruta, Distancia], rutaEntreTres(Inicio, Intermedio, Final, Ruta, Distancia), TodasRutas), minimo(TodasRutas, RutaCorta).
-
-%Predicado para calcular la ruta entre 3 nodos: inicio, intermedio, y final.
-todasRutasEntre(Inicio, Intermedio, Final, Rutas, Distancia):-
-    findall((Ruta,Distancia),rutaEntreTres(Inicio,Intermedio,Final,Ruta,Distancia),Rutas).
-
-encuentra_ruta_menor_distancia_en_rutas(Rutas, RutaMenorDistancia, DistanciaMenor) :-
-    % Encuentra la distancia minima en la lista de rutas
-    findall(Distancia, member((_, Distancia), Rutas), Distancias),
-    min_list(Distancias, DistanciaMenor), % Encuentra la distancia mínima
-    % Encuentra la primera ruta que tiene la distancia mínima
-    member((RutaMenorDistancia, DistanciaMenor), Rutas).
